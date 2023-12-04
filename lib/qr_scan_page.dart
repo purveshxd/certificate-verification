@@ -1,9 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
+import 'package:certificate_verification/qr_verify_page.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QRViewExample extends StatefulWidget {
   const QRViewExample({Key? key}) : super(key: key);
@@ -46,29 +47,6 @@ class _QRViewExampleState extends State<QRViewExample> {
               // padding: const EdgeInsets.all(10.0),
               child: _buildQrView(context),
             ),
-            FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  if (result != null)
-                    Chip(
-                      backgroundColor: Colors.grey,
-                      label: Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code} ',
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
-                  else
-                    const Text('Scan a code'),
-                  const SizedBox(
-                    height: 35,
-                  )
-                ],
-              ),
-            )
           ],
         ),
       ),
@@ -105,6 +83,21 @@ class _QRViewExampleState extends State<QRViewExample> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        if (result != null) {
+          if (result!.code!.contains('chetnango.org.in')) {
+            launchUrl(Uri.parse(result!.code.toString()));
+            print("RESULT ${result},${result!.code},${result!.format}");
+            Navigator.pop(context);
+            controller.dispose();
+          } else {
+            Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const QrVerify(),
+                ));
+            controller.dispose();
+          }
+        }
       });
     });
   }

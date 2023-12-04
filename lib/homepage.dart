@@ -17,8 +17,12 @@ class Homepage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("This is the certificate verification app for "
-                  " scan the qr code to verify that the certificate provided was offically given by ..."),
+              const Text(
+                "This is the certificate verification app for Chetna NGO"
+                " scan the qr code to verify that the certificate is original",
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 15),
               FilledButton.tonalIcon(
                 onPressed: () {
                   Navigator.push(

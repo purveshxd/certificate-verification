@@ -1,5 +1,4 @@
 import 'package:certificate_verification/homepage.dart';
-import 'package:certificate_verification/qr_scan_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,6 +15,6 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
           primarySwatch: Colors.purple,
         ),
-        home: Homepage());
+        home: const Homepage());
   }
 }
